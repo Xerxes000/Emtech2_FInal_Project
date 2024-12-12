@@ -1,37 +1,31 @@
 import streamlit as st
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import img_to_array
+import tensorflow as tf
 import numpy as np
 from PIL import Image
 
-# Load pre-trained model
-model = load_model("mobilenet_cifar10_model.h5")
+# Load the model
+model = tf.keras.models.load_model("mnist_model.h5")
 
-# CIFAR-10 class names
-classes = [
-    "Airplane", "Automobile", "Bird", "Cat", 
-    "Deer", "Dog", "Frog", "Horse", "Ship", "Truck"
-]
+# Title of the app
+st.title("MNIST Digit Classifier")
 
-# App title
-st.title("CIFAR-10 Image Classifier")
-st.write("Upload an image to classify it into one of the 10 CIFAR-10 categories.")
+# Upload image
+uploaded_file = st.file_uploader("Upload an image of a digit (28x28 pixels)", type=["png", "jpg", "jpeg"])
 
-# File uploader
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
-
-if uploaded_file:
-    # Load and preprocess the image
-    image = Image.open(uploaded_file).resize((32, 32))
-    image_array = img_to_array(image) / 255.0  # Normalize pixel values
-    image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
-
-    # Display uploaded image
+if uploaded_file is not None:
+    # Display the uploaded image
+    image = Image.open(uploaded_file).convert("L").resize((28, 28))
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    # Make prediction
-    predictions = model.predict(image_array)
-    predicted_class = classes[np.argmax(predictions)]
+    # Preprocess the image
+    img_array = np.array(image) / 255.0
+    img_array = img_array.reshape(1, 28, 28)
 
-    # Display prediction
-    st.write(f"**Predicted Class:** {predicted_class}")
+    # Make prediction
+    predictions = model.predict(img_array)
+    predicted_class = np.argmax(predictions[0])
+    confidence = predictions[0][predicted_class]
+
+    # Display the results
+    st.write(f"Predicted Class: {predicted_class}")
+    st.write(f"Confidence: {confidence:.2f}")
