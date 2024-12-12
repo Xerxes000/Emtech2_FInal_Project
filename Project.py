@@ -8,7 +8,7 @@ import os
 import h5py
 
 # Google Drive File ID for the model
-GOOGLE_DRIVE_URL = "https://drive.google.com/file/d/1bKAnp_btGozeaQqJbfHkE6-AePZOcYT7/view?usp=sharing"
+GOOGLE_DRIVE_URL = "https://drive.google.com/file/d/1DmnTQuI2gAKj8IWUaxY7KSJPdwn3LTwN/view"
 MODEL_PATH = "mobilenet_cifar10_model.h5"
 
 # Function to validate HDF5 file format
