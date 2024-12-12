@@ -8,12 +8,12 @@ import os
 
 # Google Drive File ID
 MODEL_FILE_ID = "1bKAnp_btGozeaQqJbfHkE6-AePZOcYT7"
-MODEL_PATH = "mobilenet_cifar10_model.h5"
+MODEL_PATH = "https://drive.google.com/file/d/1bKAnp_btGozeaQqJbfHkE6-AePZOcYT7/view"
 
 # Download the model from Google Drive if not already downloaded
 if not os.path.exists(MODEL_PATH):
     with st.spinner("Downloading model... This may take a few minutes."):
-        url = f"https://drive.google.com/file/d/1bKAnp_btGozeaQqJbfHkE6-AePZOcYT7/"
+        url = f"https://drive.google.com/file/d/1bKAnp_btGozeaQqJbfHkE6-AePZOcYT7/view?usp=drive_link"
         gdown.download(url, MODEL_PATH, quiet=False)
 
 # Load the model
